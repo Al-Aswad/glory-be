@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Helpers\Uuid;
+use Carbon\Traits\Timestamp;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserRedeem extends Model
 {
-    use HasFactory;
+    use HasFactory,Uuid, Timestamp, SoftDeletes;
 }
