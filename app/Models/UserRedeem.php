@@ -11,4 +11,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserRedeem extends Model
 {
     use HasFactory,Uuid, Timestamp, SoftDeletes;
+    public $incrementing = false;
 }
