@@ -20,6 +20,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onUpdate('cascade')->onDelete('restrict');
+            $table->uuid('product_id');
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('products')
+                ->onUpdate('cascade')->onDelete('restrict');
             $table->softDeletes();
             $table->timestamps();
         });

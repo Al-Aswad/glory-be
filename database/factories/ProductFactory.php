@@ -17,7 +17,13 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'description' => $this->faker->text,
+            'price' => $this->faker->randomNumber(2),
+            'stock' => $this->faker->randomNumber(2),
+            'image' => $this->faker->imageUrl(),
+            // 'created_at' => $this->faker->dateTime(),
+            // 'updated_at' => $this->faker->dateTime(),
         ];
     }
 }
