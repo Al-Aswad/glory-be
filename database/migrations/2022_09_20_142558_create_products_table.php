@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->integer('price');
             $table->integer('stock');
+            $table->decimal('price');
             $table->string('image')->nullable();
             $table->string('description')->nullable();
             $table->softDeletes();
