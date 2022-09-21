@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\InvariantError;
 use App\Exceptions\NotFoundError;
 use App\Models\Product;
+use App\Models\ProductStar;
 use App\Models\UserRedeem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,10 @@ use Illuminate\Support\Facades\DB;
 interface GiftServiceInterface
 {
     public function getGifts();
-    public function redeemGift($id);
+    public function redeemGifts($id);
+    public function ratingGifts($id, $rating);
+    public function deleteGifts($id);
+    public function updateGifts($request, $id);
     // public function getGiftsById($id);
     // public function createGift($request);
     // public function updateGift($request, $id);
@@ -24,10 +28,34 @@ interface GiftServiceInterface
 
 class GiftService implements GiftServiceInterface{
     public function getGifts(){
-        return \App\Models\Product::with('productStar')->get();
+        return Product::with('productStar')->get();
     }
 
-    public function redeemGift($id){
+    public function deleteGifts($id)
+    {
+        $gift = Product::find($id);
+
+        if (!$gift)
+            throw new NotFoundError('Data gift tidak ada');
+
+        $gift->delete();
+
+        return $gift;
+    }
+
+    public function updateGifts($request, $id)
+    {
+        $gift = Product::find($id);
+
+        if (!$gift)
+            throw new NotFoundError('Data gift tidak ada');
+
+        $gift->update($request->all());
+
+        return $gift;
+    }
+
+    public function redeemGifts($id){
 
      $user= Auth::guard('api')->user();
 
@@ -63,6 +91,33 @@ class GiftService implements GiftServiceInterface{
 
         throw new NotFoundError('Data gift tidak ada');
     }
+
+    public function ratingGifts($id, $rating){
+        $user= Auth::guard('api')->user();
+
+        $gift = Product::find($id);
+
+        if ($gift) {
+            $userHasRedeem = UserRedeem::where('user_id', $user->id)
+                ->where('product_id', $id)
+                ->first();
+
+            if($userHasRedeem){
+                ProductStar::create([
+                    'product_id' => $id,
+                    'user_id' => $user->id,
+                    'star' => round($rating)
+                ]);
+
+                return $gift;
+            }
+
+            throw new InvariantError('Anda belum redeem gift ini');
+        }
+
+        throw new NotFoundError('Data gift tidak ada');
+    }
+
 }
 
 ;?>

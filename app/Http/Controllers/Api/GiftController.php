@@ -64,19 +64,24 @@ class GiftController extends Controller
 
     public function updateGift(ProductRequest $request, $id)
     {
-        $gift = Product::find($id);
-
-        if ($gift) {
-            $gift->update($request->all());
+        try {
+            $gift = $this->service->updateGifts($request, $id);
 
             return ResponseFormatter::success($gift, 'Data gift berhasil diubah');
+        } catch (ClientError $e) {
+            return ResponseFormatter::error(
+                null,
+                $e->getMessage(),
+                $e->getCode()
+            );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return ResponseFormatter::error(
+                null,
+                'Terjadi kesalahan pada server',
+                500
+            );
         }
-
-        return ResponseFormatter::error(
-            null,
-            'Data gift gagal diubah',
-            404
-        );
     }
 
     public function updateAttributeGift(ProductRequest $request, $id)
@@ -98,26 +103,32 @@ class GiftController extends Controller
 
     public function deleteGift($id)
     {
-        $gift = Product::find($id);
+       try {
+           $gift = $this->service->deleteGifts($id);
 
-        if ($gift) {
-            $gift->delete();
+           return ResponseFormatter::success($gift, 'Data gift berhasil dihapus');
+       } catch (ClientError $e) {
+           return ResponseFormatter::error(
+               null,
+               $e->getMessage(),
+               $e->getCode()
+           );
+       } catch (\Exception $e) {
+           Log::error($e->getMessage());
 
-            return ResponseFormatter::success($gift, 'Data gift berhasil dihapus');
-        }
-
-        return ResponseFormatter::error(
-            null,
-            'Data gift gagal dihapus',
-            404
-        );
+           return ResponseFormatter::error(
+               null,
+               'Data gift gagal dihapus',
+               500
+           );
+       }
     }
 
     public function redeemGifts($id)
     {
 
         try{
-            $this->service->redeemGift($id);
+            $this->service->redeemGifts($id);
         }catch(ClientError $e){
             return ResponseFormatter::error(
                 null,
@@ -125,73 +136,25 @@ class GiftController extends Controller
                 $e->getCode()
             );
         }catch(\Exception $e){
-            return ResponseFormatter::error(null,'Maaf, terjadi kesalahan pada server kami',500,);
             Log::error($e->getMessage());
+            return ResponseFormatter::error(null,'Maaf, terjadi kesalahan pada server kami',500);
         }
-
-        // $user = auth()->user();
-        // $gift = Product::find($id);
-
-        // if ($gift) {
-        //     if ($gift->stock >= 1) {
-        //         $gift->update([
-        //             'stock' => $gift->stock - 1
-        //         ]);
-
-        //         UserRedeem::create([
-        //             'user_id' => $user->id,
-        //             'product_id' => $gift->id
-        //         ]);
-
-        //         return ResponseFormatter::success($gift, 'Data gift berhasil ditukar');
-        //     }
-
-
-        //     return ResponseFormatter::success($gift, 'Data gift berhasil diredeem');
-        // }
-
-        // return ResponseFormatter::error(
-        //     null,
-        //     'Data gift gagal diredeem',
-        //     404
-        // );
     }
 
     public function ratingGifts(RatingRequest $request, $id)
     {
-        $user = auth()->user();
-
-
         try {
-            $gift = Product::find($id);
 
-
-
-            if ($gift) {
-                $userHasRedeem = UserRedeem::where('user_id', $user->id)
-                    ->where('product_id', $id)
-                    ->first();
-
-                if($userHasRedeem){
-                    ProductStar::create([
-                        'product_id' => $id,
-                        'user_id' => $user->id,
-                        'star' => round($request->star)
-                    ]);
-
-                    return ResponseFormatter::success($gift, 'Data gift berhasil di rate');
-                }
-
-
-                return ResponseFormatter::error(null,'Data item belum di redeem',400);
-            }
-        } catch (\Exception $e) {
+            $this->service->ratingGifts($id, $request->rating);
+        } catch (ClientError $e) {
             return ResponseFormatter::error(
                 null,
-                // 'Data gift gagal di rate',
                 $e->getMessage(),
-                404
+                $e->getCode()
             );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return ResponseFormatter::error(null, 'Maaf, terjadi kesalahan pada server kami', 500);
         }
     }
 }
