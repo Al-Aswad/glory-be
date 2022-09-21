@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('stock');
             $table->decimal('price');
+            $table->decimal('star')->default(0);
             $table->string('image')->nullable();
             $table->string('description')->nullable();
             $table->softDeletes();
