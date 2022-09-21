@@ -20,4 +20,14 @@ class Product extends Model
         'stock',
         'image',
     ];
+
+    public function stars()
+    {
+        return $this->hasMany(ProductStar::class);
+    }
+
+    public function countStart()
+    {
+        return $this->stars()->count();
+    }
 }

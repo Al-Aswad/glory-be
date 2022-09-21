@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductStar;
 use App\Models\UserRedeem;
 use App\Services\GiftService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Termwind\Components\Dd;
@@ -26,40 +27,61 @@ class GiftController extends Controller
 
     public function getGifts(Request $request)
     {
-        $gifts = Product::get();
+        try {
+            $gifts = $this->service->getGifts(
+                $request->query('name'),
+                $request->query('price_from'),
+                $request->query('price_to'),
+                $request->query('limit', 10),
+                $request->query('order_by'),
+                $request->query('star'),
+            );
 
-        return ResponseFormatter::success(
-            $gifts,
-            'Data gift berhasil diambil'
-        );
+            return ResponseFormatter::success($gifts, 'Data gift berhasil diambil');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return ResponseFormatter::error($e, 'Maaf, terjadi kegagalan pada server kami', 500);
+        }
     }
 
     public function getGiftsById($id)
     {
-        $gift = Product::find($id);
+        try {
+            $gift = $this->service->getGiftsById($id);
 
-        if ($gift)
             return ResponseFormatter::success($gift, 'Data gift berhasil diambil');
+        } catch (Exception $e) {
+            if($e instanceof ClientError)
+                return ResponseFormatter::error(null, $e->getMessage(), 404);
 
-        return ResponseFormatter::error(
-            null,
-            'Data gift tidak ada',
-            404
-        );
+            Log::error($e->getMessage());
+            return ResponseFormatter::error($e, 'Maaf, terjadi kegagalan pada server kami', 500);
+        }
     }
 
     public function createGift(ProductRequest $request)
     {
-        $gift = Product::create($request->all());
+        try {
+            $gift = $this->service->createGifts($request->all());
 
-        if ($gift)
-            return ResponseFormatter::success($gift, 'Data gift berhasil ditambahkan', 201);
+            return ResponseFormatter::success(
+                $gift,
+                'Data gift berhasil ditambahkan'
+            );
+        } catch (Exception $e) {
+            if ($e instanceof ClientError)
+                return ResponseFormatter::error(
+                    null,
+                    $e->getMessage(),
+                    $e->getCode()
+                );
 
-        return ResponseFormatter::error(
-            null,
-            'Data gift gagal ditambahkan',
-            404
-        );
+            return ResponseFormatter::error(
+                null,
+                'Data gift gagal ditambahkan',
+                500
+            );
+        }
     }
 
     public function updateGift(ProductRequest $request, $id)
@@ -68,17 +90,18 @@ class GiftController extends Controller
             $gift = $this->service->updateGifts($request, $id);
 
             return ResponseFormatter::success($gift, 'Data gift berhasil diubah');
-        } catch (ClientError $e) {
-            return ResponseFormatter::error(
-                null,
-                $e->getMessage(),
-                $e->getCode()
-            );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            if ($e instanceof ClientError)
+                return ResponseFormatter::error(
+                    null,
+                    $e->getMessage(),
+                    $e->getCode()
+                );
+
             Log::error($e->getMessage());
             return ResponseFormatter::error(
                 null,
-                'Terjadi kesalahan pada server',
+                'Maaf, terjadi kegagalan pada server kami',
                 500
             );
         }
@@ -86,75 +109,95 @@ class GiftController extends Controller
 
     public function updateAttributeGift(ProductRequest $request, $id)
     {
-        $gift = Product::find($id);
-
-        if ($gift) {
-            $gift->update($request->all());
+        try {
+            $gift = $this->service->updateAttributeGifts($request->all(), $id);
 
             return ResponseFormatter::success($gift, 'Data gift berhasil diubah');
-        }
+        } catch (Exception $e) {
+            if ($e instanceof ClientError)
+                return ResponseFormatter::error(
+                    null,
+                    $e->getMessage(),
+                    $e->getCode()
+                );
 
-        return ResponseFormatter::error(
-            null,
-            'Data gift gagal diubah',
-            404
-        );
+            Log::error($e->getMessage());
+            return ResponseFormatter::error(
+                null,
+                'Maaf, terjadi kegagalan pada server kami',
+                500
+            );
+        }
     }
 
     public function deleteGift($id)
     {
-       try {
-           $gift = $this->service->deleteGifts($id);
+        try {
+            $gift = $this->service->deleteGifts($id);
 
-           return ResponseFormatter::success($gift, 'Data gift berhasil dihapus');
-       } catch (ClientError $e) {
-           return ResponseFormatter::error(
-               null,
-               $e->getMessage(),
-               $e->getCode()
-           );
-       } catch (\Exception $e) {
-           Log::error($e->getMessage());
+            return ResponseFormatter::success($gift, 'Data gift berhasil dihapus');
+        } catch (Exception $e) {
+            if ($e instanceof ClientError) {
+                return ResponseFormatter::error(
+                    null,
+                    $e->getMessage(),
+                    $e->getCode()
+                );
+            }
 
-           return ResponseFormatter::error(
-               null,
-               'Data gift gagal dihapus',
-               500
-           );
-       }
+            Log::error($e->getMessage());
+            return ResponseFormatter::error(
+                null,
+                'Maaf, terjadi kegagalan pada server kami',
+                500
+            );
+        }
     }
 
     public function redeemGifts($id)
     {
 
-        try{
+        try {
             $this->service->redeemGifts($id);
-        }catch(ClientError $e){
+        } catch (Exception $e) {
+
+            if ($e instanceof ClientError) {
+                return ResponseFormatter::error(
+                    null,
+                    $e->getMessage(),
+                    $e->getCode()
+                );
+            }
+
+
+            Log::error($e->getMessage());
             return ResponseFormatter::error(
                 null,
-                $e->getMessage(),
-                $e->getCode()
+                'Maaf, terjadi kegagalan pada server kami',
+                500
             );
-        }catch(\Exception $e){
-            Log::error($e->getMessage());
-            return ResponseFormatter::error(null,'Maaf, terjadi kesalahan pada server kami',500);
         }
     }
 
     public function ratingGifts(RatingRequest $request, $id)
     {
         try {
-
             $this->service->ratingGifts($id, $request->rating);
-        } catch (ClientError $e) {
+        } catch (Exception $e) {
+
+            if ($e instanceof ClientError) {
+                return ResponseFormatter::error(
+                    null,
+                    $e->getMessage(),
+                    $e->getCode()
+                );
+            }
+
             return ResponseFormatter::error(
                 null,
-                $e->getMessage(),
+                'Maaf, Terjadi kesalahan pada server kami',
                 $e->getCode()
             );
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            return ResponseFormatter::error(null, 'Maaf, terjadi kesalahan pada server kami', 500);
         }
     }
 }

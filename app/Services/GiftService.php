@@ -7,40 +7,56 @@ use App\Exceptions\NotFoundError;
 use App\Models\Product;
 use App\Models\ProductStar;
 use App\Models\UserRedeem;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 interface GiftServiceInterface
 {
-    public function getGifts();
+    public function createGifts($attributes);
+    public function getGifts($name, $priceFrom, $priceTo, $limit, $orderBy, $star);
+    public function getGiftsById($id);
+    public function updateGifts($request, $id);
+    public function updateAttributeGifts($attributes, $id);
+    public function deleteGifts($id);
     public function redeemGifts($id);
     public function ratingGifts($id, $rating);
-    public function deleteGifts($id);
-    public function updateGifts($request, $id);
-    // public function getGiftsById($id);
-    // public function createGift($request);
-    // public function updateGift($request, $id);
-    // public function updateAttributeGift($request, $id);
-    // public function deleteGift($id);
-    // public function redeemGifts($request, $id);
-    // public function ratingGifts($request, $id);
 }
 
 class GiftService implements GiftServiceInterface{
-    public function getGifts(){
-        return Product::with('productStar')->get();
+
+    public function getGifts($name, $priceFrom, $priceTo, $limit, $orderBy, $star){
+        $gifts = Product::with('stars');
+        if($name)
+            $gifts->where('name', 'like', '%'.$name.'%');
+
+        if($priceFrom)
+            $gifts->where('price', '>=', $priceFrom);
+
+        if($priceTo)
+            $gifts->where('price', '<=', $priceTo);
+
+        if($orderBy)
+            $gifts->orderBy('created_at', $orderBy);
+        if($star)
+            $gifts->whereRelation('stars', function($query) use ($star){
+                $query->where('star', $star)->count();
+            });
+
+        return $gifts->paginate($limit);
     }
 
-    public function deleteGifts($id)
-    {
-        $gift = Product::find($id);
+    public function getGiftsById($id){
+        $gift = Product::with('stars')->find($id);
 
-        if (!$gift)
+        if(!$gift)
             throw new NotFoundError('Data gift tidak ada');
 
-        $gift->delete();
-
         return $gift;
+    }
+
+    public function createGifts($attributes){
+        return Product::create($attributes);
     }
 
     public function updateGifts($request, $id)
@@ -48,9 +64,33 @@ class GiftService implements GiftServiceInterface{
         $gift = Product::find($id);
 
         if (!$gift)
-            throw new NotFoundError('Data gift tidak ada');
+            throw new NotFoundError('Data gift tidak ditemukan');
 
         $gift->update($request->all());
+
+        return $gift;
+    }
+
+    public function updateAttributeGifts($attributes, $id)
+    {
+        $gift = Product::find($id);
+
+        if (!$gift)
+            throw new NotFoundError('Data gift tidak ditemukan');
+
+        $gift->update($attributes);
+
+        return $gift;
+    }
+
+    public function deleteGifts($id)
+    {
+        $gift = Product::find($id);
+
+        if (!$gift)
+            throw new NotFoundError('Data gift tidak ditemukan');
+
+        $gift->delete();
 
         return $gift;
     }
@@ -115,7 +155,7 @@ class GiftService implements GiftServiceInterface{
             throw new InvariantError('Anda belum redeem gift ini');
         }
 
-        throw new NotFoundError('Data gift tidak ada');
+        throw new NotFoundError('Data gift tidak ditemukan');
     }
 
 }
