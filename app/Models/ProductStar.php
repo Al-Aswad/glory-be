@@ -12,4 +12,10 @@ class ProductStar extends Model
 {
     use HasFactory, Uuid, Timestamp, SoftDeletes;
     public $incrementing = false;
+
+    protected $fillable = [
+        'product_id',
+        'user_id',
+        'star'
+    ];
 }
