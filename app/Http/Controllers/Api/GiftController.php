@@ -7,6 +7,7 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\RatingRequest;
+use App\Http\Requests\RedeemRequest;
 use App\Models\Product;
 use App\Models\ProductStar;
 use App\Models\UserRedeem;
@@ -158,7 +159,9 @@ class GiftController extends Controller
     {
 
         try {
-            $this->service->redeemGifts($id);
+           $gift= $this->service->redeemGifts($id);
+
+            return ResponseFormatter::success($gift, 'Berhasil redeem gift');
         } catch (Exception $e) {
 
             if ($e instanceof ClientError) {
@@ -179,10 +182,36 @@ class GiftController extends Controller
         }
     }
 
+    public function redeemGiftsBulk(RedeemRequest $request){
+        try {
+            $productId=$this->service->redeemGiftsBulk($request->product_id);
+            return ResponseFormatter::success($productId, 'Berhasil redeem gift');
+        } catch (Exception $e) {
+
+            if ($e instanceof ClientError) {
+                return ResponseFormatter::error(
+                    null,
+                    $e->getMessage(),
+                    $e->getCode()
+                );
+            }
+
+            Log::error($e->getMessage());
+            return ResponseFormatter::error(
+                null,
+                'Maaf, terjadi kegagalan pada server kami',
+                500
+            );
+        }
+
+    }
+
     public function ratingGifts(RatingRequest $request, $id)
     {
         try {
-            $this->service->ratingGifts($id, $request->rating);
+           $gift= $this->service->ratingGifts($id, $request->rating);
+
+            return ResponseFormatter::success($gift, 'Berhasil memberi rating');
         } catch (Exception $e) {
 
             if ($e instanceof ClientError) {
@@ -200,4 +229,8 @@ class GiftController extends Controller
             );
         }
     }
+
+
+
+
 }

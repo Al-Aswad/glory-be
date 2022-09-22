@@ -25,7 +25,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('products')
                 ->onUpdate('cascade')->onDelete('restrict');
-            $table->decimal('star');
+            $table->integer('star');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -30,6 +30,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::patch('gifts/{id}', 'updateAttributeGift')->name('updateAttributeGift');
         Route::delete('gifts/{id}', 'deleteGift')->name('deleteGift');
         Route::post('gifts/{id}/redeem', 'redeemGifts')->name('redeemGifts');
+        Route::post('gifts/redeem', 'redeemGiftsBulk')->name('redeemGiftsBulk');
         Route::post('gifts/{id}/rating', 'ratingGifts')->name('ratingGifts');
     });
 
