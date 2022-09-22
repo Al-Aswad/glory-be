@@ -10,6 +10,7 @@ use App\Models\UserRedeem;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Termwind\Components\Dd;
 
 interface GiftServiceInterface
 {
@@ -50,7 +51,7 @@ class GiftService implements GiftServiceInterface{
         $gift = Product::with('stars')->find($id);
 
         if(!$gift)
-            throw new NotFoundError('Data gift tidak ada');
+            throw new NotFoundError('Data gift tidak ditemukan');
 
         return $gift;
     }
@@ -98,9 +99,7 @@ class GiftService implements GiftServiceInterface{
     public function redeemGifts($id){
 
      $user= Auth::guard('api')->user();
-
      $gift = Product::find($id);
-
         if ($gift) {
 
             if ($gift->stock >= 1) {
@@ -127,7 +126,7 @@ class GiftService implements GiftServiceInterface{
             throw new InvariantError('Stock gift tidak mencukupi');
         }
 
-        throw new NotFoundError('Data gift tidak ada');
+        throw new NotFoundError('Data gift tidak ditemukan');
     }
 
     public function redeemGiftsBulk($id){
@@ -136,6 +135,7 @@ class GiftService implements GiftServiceInterface{
             DB::beginTransaction();
             foreach ($id as $item) {
                 $productId[]=$item;
+                // dd($item);
                 $this->redeemGifts($item);
             }
             DB::commit();
@@ -143,7 +143,7 @@ class GiftService implements GiftServiceInterface{
             return $productId;
         }catch (Exception $e){
             DB::rollBack();
-            return $e->getMessage();
+            throw new InvariantError($e->getMessage());
         }
     }
 

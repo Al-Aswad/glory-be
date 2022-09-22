@@ -185,6 +185,7 @@ class GiftController extends Controller
     public function redeemGiftsBulk(RedeemRequest $request){
         try {
             $productId=$this->service->redeemGiftsBulk($request->product_id);
+            // dd("tes");
             return ResponseFormatter::success($productId, 'Berhasil redeem gift');
         } catch (Exception $e) {
 
