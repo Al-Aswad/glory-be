@@ -86,3 +86,44 @@ params: name, star, price_from, proce_to, order_by, limit
 <!-- more to folder docs -->
 
 more to folder [docs/postman collcation](docs)
+
+# Deploy ke AWS
+
+-   Membuat Instance EC2
+-   Membuat Security Group
+-   connect ke instance EC2 menggunakan SSH
+-   install nginx
+-   config nginx
+-   install php
+-   install composer
+-   install mysql
+-   buat user mysql
+-   buat database
+-   buka folder `cd /var/www/html`
+-   clone project
+
+```
+git clone https://al-aswad@bitbucket.org/al-aswad/glory_be.git app
+```
+
+-   buka folder `cd app`
+-   composer install
+-   rename file `.env.example` to `.env`
+-   sesuaikan variable `database` pada file `.env` dengan yang ada pada komputer anda
+
+```
+DB_CONNECTION=mysql
+DB_HOST=
+DB_PORT=3306
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+```
+
+-   jalankan perintah `php artisan migrate:f --seed` untuk menyegarkan database dan menjalankan seeder
+
+```
+php artisan migrate:f --seed
+```
+
+-   jalankan perintah `php artisan jwt:secret` untuk generate secret key JWT di file `.env`
