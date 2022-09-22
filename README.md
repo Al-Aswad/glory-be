@@ -42,8 +42,47 @@ DB_PASSWORD=root
 php artisan migrate:f --seed
 ```
 
-`8.` Jalankan perintah `php artisan server` untuk menjalankan aplikasi
+`8.` Jalankan perintah `php artisan jwt:secret` untuk generate secret key JWT di file `.env`
+
+`9.` Jalankan perintah `php artisan server` untuk menjalankan aplikasi
 
 ```bash
 php artisan server
 ```
+
+# Sample Online Demo
+
+| method | url                                                           | description |
+| ------ | ------------------------------------------------------------- | ----------- |
+| POST   | [http://18.143.145.14](http://18.143.145.14) /api/v1/register |
+
+```
+{
+    "name": "admin",
+    "email": "admin@gmail.com",
+    "password": "password",
+}
+```
+
+| method | url                                                        | description |
+| ------ | ---------------------------------------------------------- | ----------- |
+| POTS   | [http://18.143.145.14](http://18.143.145.14) /api/v1/login |
+
+```
+{
+    "email": "admin@gmail.com",
+    "password": "password",
+}
+```
+
+| method | url                                                       | description |
+| ------ | --------------------------------------------------------- | ----------- |
+| GET    | [http://18.143.145.14](http://18.143.145.14) api/v1/gifts |
+
+```
+params: name, star, price_from, proce_to, order_by, limit
+```
+
+<!-- more to folder docs -->
+
+more to folder [docs/postman collcation](docs)
