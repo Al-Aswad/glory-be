@@ -1,0 +1,1158 @@
+{
+	"info": {
+		"_postman_id": "1666ace4-7e34-4a40-b149-30e109db09bd",
+		"name": "Gifts",
+		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests a user can send?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13812529"
+	},
+	"item": [
+		{
+			"name": "Add Gift",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"test\",\r\n    \"price\" : 20000,\r\n    \"stock\" : 30\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/gifts",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gifts"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add Gift",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test\",\r\n    \"price\" : 20000,\r\n    \"stock\" : 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/gifts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gifts"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:50:17 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:50:17 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.19"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Data gift berhasil ditambahkan\",\n    \"errors\": null,\n    \"data\": {\n        \"name\": \"test\",\n        \"price\": 20000,\n        \"stock\": 30,\n        \"id\": \"251d3167-2056-495c-a8d4-53c06749f4ac\",\n        \"updated_at\": \"2022-09-22T01:50:16.000000Z\",\n        \"created_at\": \"2022-09-22T01:50:16.000000Z\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Gifts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"test update\",\r\n    \"price\" : 20000,\r\n    \"stock\" : 30\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/gifts/251d3167-2056-495c-a8d4-53c06749f4ac",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gifts",
+						"251d3167-2056-495c-a8d4-53c06749f4ac"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update Gifts",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test update\",\r\n    \"price\" : 20000,\r\n    \"stock\" : 30\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/gifts/251d3167-2056-495c-a8d4-53c06749f4ac",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gifts",
+								"251d3167-2056-495c-a8d4-53c06749f4ac"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:50:37 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:50:37 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.19"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "57"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Data gift berhasil diubah\",\n    \"errors\": null,\n    \"data\": {\n        \"id\": \"251d3167-2056-495c-a8d4-53c06749f4ac\",\n        \"name\": \"test update\",\n        \"stock\": 30,\n        \"price\": 20000,\n        \"star\": 0,\n        \"image\": null,\n        \"description\": null,\n        \"deleted_at\": null,\n        \"created_at\": \"2022-09-22T01:50:16.000000Z\",\n        \"updated_at\": \"2022-09-22T01:50:37.000000Z\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Attribute Gifts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"test update\",\r\n    \"price\" : 20000,\r\n    \"stock\" : 30\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/gifts/1dc24345-a854-44ce-b8f8-f8f6b651301b",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gifts",
+						"1dc24345-a854-44ce-b8f8-f8f6b651301b"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update Attribute Gifts",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test update\",\r\n    \"price\" : 20000,\r\n    \"stock\" : 30\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/gifts/251d3167-2056-495c-a8d4-53c06749f4ac",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gifts",
+								"251d3167-2056-495c-a8d4-53c06749f4ac"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:50:55 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:50:55 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.19"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "56"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Data gift berhasil diubah\",\n    \"errors\": null,\n    \"data\": {\n        \"id\": \"251d3167-2056-495c-a8d4-53c06749f4ac\",\n        \"name\": \"test update\",\n        \"stock\": 30,\n        \"price\": 20000,\n        \"star\": 0,\n        \"image\": null,\n        \"description\": null,\n        \"deleted_at\": null,\n        \"created_at\": \"2022-09-22T01:50:16.000000Z\",\n        \"updated_at\": \"2022-09-22T01:50:55.000000Z\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get All Gifts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/gifts?order_by=desc&price_from=70&proce_to=100",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gifts"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Swift",
+							"disabled": true
+						},
+						{
+							"key": "star",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "order_by",
+							"value": "desc"
+						},
+						{
+							"key": "limit",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "price_from",
+							"value": "70"
+						},
+						{
+							"key": "proce_to",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get All Gifts",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/gifts?order_by=desc&price_from=70&proce_to=100",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gifts"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Swift",
+									"disabled": true
+								},
+								{
+									"key": "star",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "order_by",
+									"value": "desc"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "price_from",
+									"value": "70"
+								},
+								{
+									"key": "proce_to",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:51:01 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:51:01 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.19"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "55"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Data gift berhasil diambil\",\n    \"errors\": null,\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": \"251d3167-2056-495c-a8d4-53c06749f4ac\",\n                \"name\": \"test update\",\n                \"stock\": 30,\n                \"price\": \"20000.00\",\n                \"star\": 0,\n                \"image\": null,\n                \"description\": null,\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T01:50:16.000000Z\",\n                \"updated_at\": \"2022-09-22T01:50:55.000000Z\"\n            },\n            {\n                \"id\": \"6d2236bc-92ac-4b27-a901-81ebe444f3ac\",\n                \"name\": \"Prof. Walton Ondricka\",\n                \"stock\": 56,\n                \"price\": \"7877.00\",\n                \"star\": 0,\n                \"image\": \"https://via.placeholder.com/640x480.png/00aa66?text=odit\",\n                \"description\": \"Non repellendus cupiditate qui veniam odit sed. Vero et est quia iste occaecati recusandae. Placeat sunt corrupti voluptatem alias quia.\",\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n                \"updated_at\": \"2022-09-22T00:08:31.000000Z\"\n            },\n            {\n                \"id\": \"fe99bfda-822e-4b3d-9db9-e246a5371513\",\n                \"name\": \"Dr. Anastasia Runolfsdottir\",\n                \"stock\": 50,\n                \"price\": \"3877.00\",\n                \"star\": 3,\n                \"image\": \"https://via.placeholder.com/640x480.png/00cc99?text=voluptates\",\n                \"description\": \"Maiores non corrupti ut et quibusdam. Optio ipsum totam vero doloremque ut. Nulla necessitatibus nam beatae repellendus odit. Est error aliquid aut unde qui accusantium.\",\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n                \"updated_at\": \"2022-09-22T00:53:29.000000Z\"\n            },\n            {\n                \"id\": \"efea95c8-2277-490d-a980-8e8f02bb5c10\",\n                \"name\": \"Benton Harris\",\n                \"stock\": 67,\n                \"price\": \"2520.00\",\n                \"star\": 0,\n                \"image\": \"https://via.placeholder.com/640x480.png/003366?text=non\",\n                \"description\": \"Ipsam et et quae et nihil minima dignissimos. Non minus eum laboriosam sed enim tempore. Et recusandae eos magni.\",\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n                \"updated_at\": \"2022-09-22T00:08:31.000000Z\"\n            },\n            {\n                \"id\": \"e21f2863-7811-4e88-ad70-6b47b8549073\",\n                \"name\": \"Nolan Wolff\",\n                \"stock\": 17,\n                \"price\": \"8511.00\",\n                \"star\": 0,\n                \"image\": \"https://via.placeholder.com/640x480.png/006644?text=nisi\",\n                \"description\": \"Quis ducimus dolores sunt sit quis. Aut accusantium debitis error excepturi perferendis sunt et. Tenetur quisquam ex voluptatibus aliquam neque.\",\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n                \"updated_at\": \"2022-09-22T00:08:31.000000Z\"\n            },\n            {\n                \"id\": \"d53dc2c4-5a67-48cc-a68f-374e2a60ec2b\",\n                \"name\": \"Maia Rodriguez\",\n                \"stock\": 52,\n                \"price\": \"1694.00\",\n                \"star\": 0,\n                \"image\": \"https://via.placeholder.com/640x480.png/001122?text=possimus\",\n                \"description\": \"Quas nulla earum voluptate qui aliquid. Perferendis delectus omnis tenetur sit quae rerum.\",\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n                \"updated_at\": \"2022-09-22T00:08:31.000000Z\"\n            },\n            {\n                \"id\": \"bfb43923-d2ec-4ade-97f5-edc73bba9dc4\",\n                \"name\": \"Leif Satterfield\",\n                \"stock\": 36,\n                \"price\": \"1549.00\",\n                \"star\": 0,\n                \"image\": \"https://via.placeholder.com/640x480.png/002277?text=dignissimos\",\n                \"description\": \"Natus molestias soluta voluptatum temporibus adipisci voluptas nesciunt. Quia quis rerum aut voluptas. Atque delectus et distinctio et explicabo tempore recusandae. Laborum dicta illum qui soluta.\",\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n                \"updated_at\": \"2022-09-22T00:08:31.000000Z\"\n            },\n            {\n                \"id\": \"bac7a580-516b-415e-97d3-1e4e3bfa6ffc\",\n                \"name\": \"Bradford Hickle\",\n                \"stock\": 16,\n                \"price\": \"6296.00\",\n                \"star\": 0,\n                \"image\": \"https://via.placeholder.com/640x480.png/007766?text=debitis\",\n                \"description\": \"Odit eum sed perspiciatis et harum minima non nemo. Voluptatem aspernatur id nostrum consequatur tempora esse mollitia corrupti.\",\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n                \"updated_at\": \"2022-09-22T00:08:31.000000Z\"\n            },\n            {\n                \"id\": \"a2140455-bf71-4820-a157-7d26d8ca67f6\",\n                \"name\": \"Jules Abbott\",\n                \"stock\": 86,\n                \"price\": \"7417.00\",\n                \"star\": 0,\n                \"image\": \"https://via.placeholder.com/640x480.png/009988?text=dolore\",\n                \"description\": \"Dolore cupiditate qui facere tenetur nobis. Atque cum error odit architecto voluptate soluta et in. Delectus animi ratione eaque vitae accusantium dolorum.\",\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n                \"updated_at\": \"2022-09-22T00:08:31.000000Z\"\n            },\n            {\n                \"id\": \"98b04f97-95fe-46c1-b157-3d19b48ddeeb\",\n                \"name\": \"Murphy Medhurst IV\",\n                \"stock\": 72,\n                \"price\": \"2011.00\",\n                \"star\": 0,\n                \"image\": \"https://via.placeholder.com/640x480.png/0088aa?text=nemo\",\n                \"description\": \"Impedit excepturi dolores ullam sed. Iste placeat aliquam quo in aliquam eius. Repellat et earum aspernatur. Dignissimos non tenetur recusandae soluta deserunt sit voluptates ut.\",\n                \"deleted_at\": null,\n                \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n                \"updated_at\": \"2022-09-22T00:08:31.000000Z\"\n            }\n        ],\n        \"first_page_url\": \"http://127.0.0.1:8000/api/v1/gifts?page=1\",\n        \"from\": 1,\n        \"last_page\": 2,\n        \"last_page_url\": \"http://127.0.0.1:8000/api/v1/gifts?page=2\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/v1/gifts?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/v1/gifts?page=2\",\n                \"label\": \"2\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/v1/gifts?page=2\",\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": \"http://127.0.0.1:8000/api/v1/gifts?page=2\",\n        \"path\": \"http://127.0.0.1:8000/api/v1/gifts\",\n        \"per_page\": 10,\n        \"prev_page_url\": null,\n        \"to\": 10,\n        \"total\": 18\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Gifts By Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/gifts/251d3167-2056-495c-a8d4-53c06749f4ac",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gifts",
+						"251d3167-2056-495c-a8d4-53c06749f4ac"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Gifts By Id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/gifts/251d3167-2056-495c-a8d4-53c06749f4ac",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gifts",
+								"251d3167-2056-495c-a8d4-53c06749f4ac"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:51:14 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:51:14 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.19"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "53"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Data gift berhasil diambil\",\n    \"errors\": null,\n    \"data\": {\n        \"id\": \"251d3167-2056-495c-a8d4-53c06749f4ac\",\n        \"name\": \"test update\",\n        \"stock\": 30,\n        \"price\": \"20000.00\",\n        \"star\": 0,\n        \"image\": null,\n        \"description\": null,\n        \"deleted_at\": null,\n        \"created_at\": \"2022-09-22T01:50:16.000000Z\",\n        \"updated_at\": \"2022-09-22T01:50:55.000000Z\",\n        \"stars\": []\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Gifts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/gifts/251d3167-2056-495c-a8d4-53c06749f4ac",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gifts",
+						"251d3167-2056-495c-a8d4-53c06749f4ac"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete Gifts",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/gifts/251d3167-2056-495c-a8d4-53c06749f4ac",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gifts",
+								"251d3167-2056-495c-a8d4-53c06749f4ac"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:51:26 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 01:51:26 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.19"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "58"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Data gift berhasil dihapus\",\n    \"errors\": null,\n    \"data\": {\n        \"id\": \"251d3167-2056-495c-a8d4-53c06749f4ac\",\n        \"name\": \"test update\",\n        \"stock\": 30,\n        \"price\": \"20000.00\",\n        \"star\": 0,\n        \"image\": null,\n        \"description\": null,\n        \"deleted_at\": \"2022-09-22T01:51:26.000000Z\",\n        \"created_at\": \"2022-09-22T01:50:16.000000Z\",\n        \"updated_at\": \"2022-09-22T01:51:26.000000Z\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Redeem Gifts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/gifts/efea95c8-2277-490d-a980-8e8f02bb5c10/redeem",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gifts",
+						"efea95c8-2277-490d-a980-8e8f02bb5c10",
+						"redeem"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Redeem Gifts",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/gifts/efea95c8-2277-490d-a980-8e8f02bb5c10/redeem",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gifts",
+								"efea95c8-2277-490d-a980-8e8f02bb5c10",
+								"redeem"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 12:23:26 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 12:23:26 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.19"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Berhasil redeem gift\",\n    \"errors\": null,\n    \"data\": {\n        \"id\": \"efea95c8-2277-490d-a980-8e8f02bb5c10\",\n        \"name\": \"Benton Harris\",\n        \"stock\": 65,\n        \"price\": \"2520.00\",\n        \"star\": 5,\n        \"image\": \"https://via.placeholder.com/640x480.png/003366?text=non\",\n        \"description\": \"Ipsam et et quae et nihil minima dignissimos. Non minus eum laboriosam sed enim tempore. Et recusandae eos magni.\",\n        \"deleted_at\": null,\n        \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n        \"updated_at\": \"2022-09-22T12:23:26.000000Z\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Bulk Redeem Gifts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product_id\": [\r\n        \"6d2236bc-92ac-4b27-a901-81ebe444f3ac\",\r\n        \"efea95c8-2277-490d-a980-8e8f02bb5c10\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/gifts/redeem",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gifts",
+						"redeem"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Bulk Redeem Gifts",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": [\r\n        \"6d2236bc-92ac-4b27-a901-81ebe444f3ac\",\r\n        \"efea95c8-2277-490d-a980-8e8f02bb5c10\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/gifts/redeem",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gifts",
+								"redeem"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 12:22:54 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 12:22:54 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.19"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "57"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Berhasil redeem gift\",\n    \"errors\": null,\n    \"data\": [\n        \"6d2236bc-92ac-4b27-a901-81ebe444f3ac\",\n        \"efea95c8-2277-490d-a980-8e8f02bb5c10\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Rating Gifts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rating\" : 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/gifts/efea95c8-2277-490d-a980-8e8f02bb5c10/rating",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gifts",
+						"efea95c8-2277-490d-a980-8e8f02bb5c10",
+						"rating"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Rating Gifts",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\" : 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/gifts/efea95c8-2277-490d-a980-8e8f02bb5c10/rating",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gifts",
+								"efea95c8-2277-490d-a980-8e8f02bb5c10",
+								"rating"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 12:23:11 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Sep 2022 12:23:11 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.19"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "56"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Berhasil memberi rating\",\n    \"errors\": null,\n    \"data\": {\n        \"id\": \"efea95c8-2277-490d-a980-8e8f02bb5c10\",\n        \"name\": \"Benton Harris\",\n        \"stock\": 66,\n        \"price\": \"2520.00\",\n        \"star\": 0,\n        \"image\": \"https://via.placeholder.com/640x480.png/003366?text=non\",\n        \"description\": \"Ipsam et et quae et nihil minima dignissimos. Non minus eum laboriosam sed enim tempore. Et recusandae eos magni.\",\n        \"deleted_at\": null,\n        \"created_at\": \"2022-09-22T00:08:31.000000Z\",\n        \"updated_at\": \"2022-09-22T12:22:54.000000Z\"\n    }\n}"
+				}
+			]
+		}
+	]
+}
