@@ -15,48 +15,65 @@ use Termwind\Components\Dd;
 interface GiftServiceInterface
 {
     public function createGifts($attributes);
+
     public function getGifts($name, $priceFrom, $priceTo, $limit, $orderBy, $star);
+
     public function getGiftsById($id);
+
     public function updateGifts($request, $id);
+
     public function updateAttributeGifts($attributes, $id);
+
     public function deleteGifts($id);
+
     public function redeemGifts($id);
+
     public function redeemGiftsBulk($id);
+
     public function ratingGifts($id, $rating);
 }
 
-class GiftService implements GiftServiceInterface{
-
-    public function getGifts($name, $priceFrom, $priceTo, $limit, $orderBy, $star){
+class GiftService implements GiftServiceInterface
+{
+    public function getGifts($name, $priceFrom, $priceTo, $limit, $orderBy, $star)
+    {
         $gifts = Product::query();
-        if($name)
+        if ($name) {
             $gifts->where('name', 'like', '%'.$name.'%');
+        }
 
-        if($priceFrom)
+        if ($priceFrom) {
             $gifts->where('price', '>=', $priceFrom);
+        }
 
-        if($priceTo)
+        if ($priceTo) {
             $gifts->where('price', '<=', $priceTo);
+        }
 
-        if($star)
+        if ($star) {
             $gifts->where('products.star', $star);
+        }
 
-        if($orderBy)
+        if ($orderBy) {
             $gifts->orderBy('created_at', $orderBy);
+        }
 
         return $gifts->paginate($limit);
     }
 
-    public function getGiftsById($id){
+    public function getGiftsById($id)
+    {
         $gift = Product::with('stars')->find($id);
 
-        if(!$gift)
+        if (! $gift) {
             throw new NotFoundError('Data gift tidak ditemukan');
+        }
 
         return $gift;
     }
 
-    public function createGifts($attributes){
+    public function createGifts($attributes)
+    {
         return Product::create($attributes);
     }
 
@@ -64,8 +81,9 @@ class GiftService implements GiftServiceInterface{
     {
         $gift = Product::find($id);
 
-        if (!$gift)
+        if (! $gift) {
             throw new NotFoundError('Data gift tidak ditemukan');
+        }
 
         $gift->update($request->all());
 
@@ -76,8 +94,9 @@ class GiftService implements GiftServiceInterface{
     {
         $gift = Product::find($id);
 
-        if (!$gift)
+        if (! $gift) {
             throw new NotFoundError('Data gift tidak ditemukan');
+        }
 
         $gift->update($attributes);
 
@@ -88,36 +107,37 @@ class GiftService implements GiftServiceInterface{
     {
         $gift = Product::find($id);
 
-        if (!$gift)
+        if (! $gift) {
             throw new NotFoundError('Data gift tidak ditemukan');
+        }
 
         $gift->delete();
 
         return $gift;
     }
 
-    public function redeemGifts($id){
-
-     $user= Auth::guard('api')->user();
-     $gift = Product::find($id);
+    public function redeemGifts($id)
+    {
+        $user = Auth::guard('api')->user();
+        $gift = Product::find($id);
         if ($gift) {
-
             if ($gift->stock >= 1) {
-                try{
+                try {
                     DB::beginTransaction();
 
                     $gift->update([
-                        'stock' => $gift->stock - 1
+                        'stock' => $gift->stock - 1,
                     ]);
 
                     UserRedeem::create([
                         'user_id' => $user->id,
-                        'product_id' => $gift->id
+                        'product_id' => $gift->id,
                     ]);
 
                     DB::commit();
+
                     return $gift;
-                }catch(\Exception $e){
+                } catch(\Exception $e) {
                     DB::rollBack();
                     throw new InvariantError($e->getMessage());
                 }
@@ -129,26 +149,28 @@ class GiftService implements GiftServiceInterface{
         throw new NotFoundError('Data gift tidak ditemukan');
     }
 
-    public function redeemGiftsBulk($id){
-        try{
-            $productId=[];
+    public function redeemGiftsBulk($id)
+    {
+        try {
+            $productId = [];
             DB::beginTransaction();
             foreach ($id as $item) {
-                $productId[]=$item;
+                $productId[] = $item;
                 // dd($item);
                 $this->redeemGifts($item);
             }
             DB::commit();
 
             return $productId;
-        }catch (Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             throw new InvariantError($e->getMessage());
         }
     }
 
-    public function ratingGifts($id, $rating){
-        $user= Auth::guard('api')->user();
+    public function ratingGifts($id, $rating)
+    {
+        $user = Auth::guard('api')->user();
 
         $gift = Product::find($id);
 
@@ -157,22 +179,21 @@ class GiftService implements GiftServiceInterface{
                 ->where('product_id', $id)
                 ->first();
 
-            $productStart=$this->_ratingGiftsExist($id, $user->id);
-            if($productStart){
-
+            $productStart = $this->_ratingGiftsExist($id, $user->id);
+            if ($productStart) {
                 $productStart->update([
-                        'star' => round($rating)
-                    ]);
+                    'star' => round($rating),
+                ]);
 
                 $this->_updateRatingOnProduct($id);
 
                 return $gift;
-            }else{
-                if($userHasRedeem){
+            } else {
+                if ($userHasRedeem) {
                     ProductStar::create([
                         'product_id' => $id,
                         'user_id' => $user->id,
-                        'star' => round($rating)
+                        'star' => round($rating),
                     ]);
 
                     $this->_updateRatingOnProduct($id);
@@ -187,31 +208,31 @@ class GiftService implements GiftServiceInterface{
         throw new NotFoundError('Data gift tidak ditemukan');
     }
 
-    private function _updateRatingOnProduct($id){
+    private function _updateRatingOnProduct($id)
+    {
         $product = Product::find($id);
         $product->update([
-            'star' => $this->_getRating($id)
+            'star' => $this->_getRating($id),
         ]);
     }
 
-    private function _getRating($id){
+    private function _getRating($id)
+    {
         $productStar = ProductStar::where('product_id', $id)->get();
         $totalRating = 0;
-        foreach ($productStar as $star){
+        foreach ($productStar as $star) {
             $totalRating += $star->star;
         }
 
         return $totalRating / $productStar->count();
     }
 
-    private function _ratingGiftsExist($id, $user_id){
+    private function _ratingGiftsExist($id, $user_id)
+    {
         $rating = ProductStar::where('product_id', $id)
             ->where('user_id', $user_id)
             ->first();
 
         return $rating;
     }
-
 }
-
-;?>

@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
-use Throwable;
 use Illuminate\Support\Str;
+use Throwable;
 
 trait Uuid
 {
@@ -19,8 +19,5 @@ trait Uuid
                 abort(500, $e->getMessage());
             }
         });
-
-
     }
-
 }

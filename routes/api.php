@@ -20,7 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::group(['prefix' => 'v1'], function () {
     Route::controller(GiftController::class)->middleware('auth:api')->group(function () {
         Route::get('gifts', 'getGifts')->name('gifts');

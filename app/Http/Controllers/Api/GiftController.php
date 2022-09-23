@@ -8,9 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\RatingRequest;
 use App\Http\Requests\RedeemRequest;
-use App\Models\Product;
-use App\Models\ProductStar;
-use App\Models\UserRedeem;
 use App\Services\GiftService;
 use Exception;
 use Illuminate\Http\Request;
@@ -41,6 +38,7 @@ class GiftController extends Controller
             return ResponseFormatter::success($gifts, 'Data gift berhasil diambil');
         } catch (Exception $e) {
             Log::error($e->getMessage());
+
             return ResponseFormatter::error($e, 'Maaf, terjadi kegagalan pada server kami', 500);
         }
     }
@@ -52,10 +50,12 @@ class GiftController extends Controller
 
             return ResponseFormatter::success($gift, 'Data gift berhasil diambil');
         } catch (Exception $e) {
-            if($e instanceof ClientError)
+            if ($e instanceof ClientError) {
                 return ResponseFormatter::error(null, $e->getMessage(), 404);
+            }
 
             Log::error($e->getMessage());
+
             return ResponseFormatter::error($e, 'Maaf, terjadi kegagalan pada server kami', 500);
         }
     }
@@ -70,12 +70,13 @@ class GiftController extends Controller
                 'Data gift berhasil ditambahkan'
             );
         } catch (Exception $e) {
-            if ($e instanceof ClientError)
+            if ($e instanceof ClientError) {
                 return ResponseFormatter::error(
                     null,
                     $e->getMessage(),
                     $e->getCode()
                 );
+            }
 
             return ResponseFormatter::error(
                 null,
@@ -92,14 +93,16 @@ class GiftController extends Controller
 
             return ResponseFormatter::success($gift, 'Data gift berhasil diubah');
         } catch (Exception $e) {
-            if ($e instanceof ClientError)
+            if ($e instanceof ClientError) {
                 return ResponseFormatter::error(
                     null,
                     $e->getMessage(),
                     $e->getCode()
                 );
+            }
 
             Log::error($e->getMessage());
+
             return ResponseFormatter::error(
                 null,
                 'Maaf, terjadi kegagalan pada server kami',
@@ -115,14 +118,16 @@ class GiftController extends Controller
 
             return ResponseFormatter::success($gift, 'Data gift berhasil diubah');
         } catch (Exception $e) {
-            if ($e instanceof ClientError)
+            if ($e instanceof ClientError) {
                 return ResponseFormatter::error(
                     null,
                     $e->getMessage(),
                     $e->getCode()
                 );
+            }
 
             Log::error($e->getMessage());
+
             return ResponseFormatter::error(
                 null,
                 'Maaf, terjadi kegagalan pada server kami',
@@ -147,6 +152,7 @@ class GiftController extends Controller
             }
 
             Log::error($e->getMessage());
+
             return ResponseFormatter::error(
                 null,
                 'Maaf, terjadi kegagalan pada server kami',
@@ -157,13 +163,11 @@ class GiftController extends Controller
 
     public function redeemGifts($id)
     {
-
         try {
-           $gift= $this->service->redeemGifts($id);
+            $gift = $this->service->redeemGifts($id);
 
             return ResponseFormatter::success($gift, 'Berhasil redeem gift');
         } catch (Exception $e) {
-
             if ($e instanceof ClientError) {
                 return ResponseFormatter::error(
                     null,
@@ -172,21 +176,21 @@ class GiftController extends Controller
                 );
             }
 
-
             Log::error($e->getMessage());
+
             return ResponseFormatter::error(
                 null, 'Maaf, terjadi kegagalan pada server kami', 500
             );
         }
     }
 
-    public function redeemGiftsBulk(RedeemRequest $request){
+    public function redeemGiftsBulk(RedeemRequest $request)
+    {
         try {
-            $productId=$this->service->redeemGiftsBulk($request->product_id);
+            $productId = $this->service->redeemGiftsBulk($request->product_id);
             // dd("tes");
             return ResponseFormatter::success($productId, 'Berhasil redeem gift');
         } catch (Exception $e) {
-
             if ($e instanceof ClientError) {
                 return ResponseFormatter::error(
                     null,
@@ -196,21 +200,20 @@ class GiftController extends Controller
             }
 
             Log::error($e->getMessage());
+
             return ResponseFormatter::error(
                 null, 'Maaf, terjadi kegagalan pada server kami', 500
             );
         }
-
     }
 
     public function ratingGifts(RatingRequest $request, $id)
     {
         try {
-           $gift= $this->service->ratingGifts($id, $request->rating);
+            $gift = $this->service->ratingGifts($id, $request->rating);
 
             return ResponseFormatter::success($gift, 'Berhasil memberi rating');
         } catch (Exception $e) {
-
             if ($e instanceof ClientError) {
                 return ResponseFormatter::error(
                     null,
@@ -226,8 +229,4 @@ class GiftController extends Controller
             );
         }
     }
-
-
-
-
 }

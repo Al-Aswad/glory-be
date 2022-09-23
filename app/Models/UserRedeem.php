@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserRedeem extends Model
 {
     use HasFactory,Uuid, Timestamp, SoftDeletes;
+
     public $incrementing = false;
 
     protected $fillable = [
         'user_id',
         'product_id',
-        'redeem_date'
+        'redeem_date',
     ];
 }
