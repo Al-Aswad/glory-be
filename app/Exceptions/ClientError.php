@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\ResponseFormatter;
 use Exception;
 
 class ClientError extends Exception
@@ -10,5 +11,10 @@ class ClientError extends Exception
     {
         $this->message = $message;
         $this->code = $code;
+    }
+
+    public function render()
+    {
+        return ResponseFormatter::error(null, $this->getMessage(), $this->code);
     }
 }
