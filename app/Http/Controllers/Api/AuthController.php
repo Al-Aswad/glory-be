@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,12 +18,8 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
         $credentials = $request->only('email', 'password');
 
         $token = Auth::guard('api')->attempt($credentials);
@@ -45,13 +43,7 @@ class AuthController extends Controller
 
     }
 
-    public function register(Request $request){
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
-
+    public function register(RegisterRequest $request){
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -67,35 +59,22 @@ class AuthController extends Controller
             ],
             'Berhasil mendaftar'
         );
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
-        ]);
     }
 
     public function logout()
     {
         Auth::guard('api')->logout();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Successfully logged out',
-        ]);
+        return ResponseFormatter::success(null, 'Berhasil logout');
     }
 
     public function refresh()
     {
-        return response()->json([
-            'status' => 'success',
-            'user' => Auth::guard('api')->user(),
-            'authorisation' => [
-                'token' => Auth::guard('api')->refresh(),
-                'type' => 'bearer',
-            ]
-        ]);
+        return ResponseFormatter::success(
+            [
+                'token_type' => 'Bearer',
+                'access_token' => Auth::guard('api')->refresh(),
+            ],
+            'Berhasil refresh token'
+        );
     }
 }
