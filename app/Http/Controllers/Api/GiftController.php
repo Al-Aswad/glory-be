@@ -175,9 +175,7 @@ class GiftController extends Controller
 
             Log::error($e->getMessage());
             return ResponseFormatter::error(
-                null,
-                'Maaf, terjadi kegagalan pada server kami',
-                500
+                null, 'Maaf, terjadi kegagalan pada server kami', 500
             );
         }
     }
@@ -199,9 +197,7 @@ class GiftController extends Controller
 
             Log::error($e->getMessage());
             return ResponseFormatter::error(
-                null,
-                'Maaf, terjadi kegagalan pada server kami',
-                500
+                null, 'Maaf, terjadi kegagalan pada server kami', 500
             );
         }
 
