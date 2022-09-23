@@ -8,9 +8,7 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Requests\RatingRequest;
 use App\Http\Requests\RedeemRequest;
 use App\Services\GiftService;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class GiftController extends Controller
 {
@@ -23,22 +21,16 @@ class GiftController extends Controller
 
     public function getGifts(Request $request)
     {
-        try {
-            $gifts = $this->service->getGifts(
-                $request->query('name'),
-                $request->query('price_from'),
-                $request->query('price_to'),
-                $request->query('limit', 10),
-                $request->query('order_by'),
-                $request->query('star'),
-            );
+        $gifts = $this->service->getGifts(
+            $request->query('name'),
+            $request->query('price_from'),
+            $request->query('price_to'),
+            $request->query('limit', 10),
+            $request->query('order_by'),
+            $request->query('star'),
+        );
 
-            return ResponseFormatter::success($gifts, 'Data gift berhasil diambil');
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-
-            return ResponseFormatter::error($e, 'Maaf, terjadi kegagalan pada server kami', 500);
-        }
+        return ResponseFormatter::success($gifts, 'Data gift berhasil diambil');
     }
 
     public function getGiftsById($id)

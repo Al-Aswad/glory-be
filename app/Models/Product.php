@@ -12,8 +12,6 @@ class Product extends Model
 {
     use HasFactory, Uuid, Timestamp, SoftDeletes;
 
-    public $incrementing = false;
-
     protected $fillable = [
         'name',
         'description',

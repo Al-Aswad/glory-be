@@ -7,6 +7,16 @@ use Throwable;
 
 trait Uuid
 {
+    public function getKeyType()
+    {
+        return 'string';
+    }
+
+    public function getIncrementing()
+    {
+        return false;
+    }
+
     protected static function boot()
     {
         parent::boot();
