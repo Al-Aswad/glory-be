@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::controller(GiftController::class)->middleware('auth:api')->group(function () {
+    Route::controller(GiftController::class)->middleware('auth.jwt')->group(function () {
         Route::get('gifts', 'getGifts')->name('gifts');
         Route::get('gifts/{id}', 'getGiftsById')->name('giftsById');
         Route::post('gifts', 'createGift')->name('createGift');

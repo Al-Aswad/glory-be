@@ -5,6 +5,10 @@ namespace App\Exceptions;
 use App\Helpers\ResponseFormatter;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenExpiredException;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenInvalidException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -47,17 +51,33 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-           //
-        });
-
-        $this->renderable(function (Exception $e) {
-            return ResponseFormatter::error(null, 'Maaf, kesalahan pada server.', 500);
+            //
         });
 
         $this->renderable(function (NotFoundHttpException $e, $request) {
             if ($request->is('api/*')) {
                 return ResponseFormatter::error(null, 'Record not found.', 404);
             }
+        });
+
+        //JWT
+        $this->renderable(function (TokenInvalidException $e, $request) {
+            return ResponseFormatter::error(null, 'Invalid token.', 401);
+        });
+        $this->renderable(function (TokenExpiredException $e, $request) {
+            return ResponseFormatter::error(null, 'Token has Expired.', 401);
+        });
+
+        $this->renderable(function (JWTException $e, $request) {
+            return ResponseFormatter::error(null, 'Token not parsed.', 401);
+        });
+
+        $this->renderable(function (Exception $e) {
+            if ($e instanceof ValidationException) {
+                return ResponseFormatter::error(null, $e->getMessage(), $e->status);
+            }
+
+            return ResponseFormatter::error(null, 'Maaf, kesalahan pada server.', 500);
         });
     }
 }
