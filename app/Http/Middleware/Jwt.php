@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class JwtMiddleWare
+class Jwt
 {
     /**
      * Handle an incoming request.
