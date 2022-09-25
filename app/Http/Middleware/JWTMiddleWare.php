@@ -17,8 +17,7 @@ class JwtMiddleWare
      */
     public function handle(Request $request, Closure $next)
     {
-        $token = $request->header('Authorization');
-        $user = Auth::guard('api')->setToken($token)->user();
+        $user = Auth::guard('api')->user();
 
         if ($user) {
             return $next($request);

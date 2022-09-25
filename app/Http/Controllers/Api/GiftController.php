@@ -21,7 +21,6 @@ class GiftController extends Controller
 
     public function getGifts(Request $request)
     {
-        dd($request->all());
         $gifts = $this->service->getGifts(
             $request->query('name'),
             $request->query('price_from'),
