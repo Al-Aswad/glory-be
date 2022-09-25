@@ -85,7 +85,7 @@ params: name, star, price_from, proce_to, order_by, limit
 
 <!-- more to folder docs -->
 
-more to folder [docs/postman collcation](docs)
+## more to folder [OpenDocs](https://app.swaggerhub.com/apis-docs/Al-Aswad/GloryAPI/1.0.0)
 
 # Deploy ke AWS
 
